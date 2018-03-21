@@ -146,7 +146,7 @@ Now, plotting the data feeds into the following function.
 ```python
 gmap.plot(latitudes, longitudes, 'cornflowerblue', edge_width=10)
 ```
-So we'll need an array of latitudes, each element representing the latitude of a trip, and an array of longitudes, each representing the longitudes associted with a trip.  Write a function called `trip_latitudes` that given a list of trips returns a list of latitudes, and `trip_longitudes` that given a list of trips, returns a list of `longitudes` accordingly.  Run the file `nearest-neighbor-lab-tests.py` to get feedback.  
+So we'll need an array of latitudes, each element representing the latitude of a trip, and an array of longitudes, each representing the longitudes associated with a trip.  Write a function called `trip_latitudes` that given a list of trips returns a list of latitudes, and `trip_longitudes` that given a list of trips, returns a list of `longitudes` accordingly.  Run the file `nearest-neighbor-lab-tests.py` to get feedback.  
 
 
 ```python
