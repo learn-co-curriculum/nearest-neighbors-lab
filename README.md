@@ -12,7 +12,7 @@ In this lab, you apply nearest neighbors technique to help a taxi company predic
 LiftOff asks us to do some analysis to write a function that will allow it to **predict the length of a taxi ride for any given location **.
 
 Our technique will be the following:
-  * **Collect** Obtain the data containing all of the taxi information, and only select the attributes of taxi trips that we need 
+  * **Collect** Obtain the data containing all of the taxi information, and only select the attributes of taxi trips that we need
   * ** Explore ** Examine the attributes of our data, and plot some of our data on a map
   * ** Train ** Write our nearest neighbors formula, and change the number of nearby trips to predict the length of a new trip
   * ** Predict ** Use our function to predict trip lengths of new locations
@@ -32,7 +32,7 @@ For you're reading pleasure, the data has already been downloaded into the [trip
 import json
 # First, read the file
 trips_file = open('trips.json')
-# Then, convert contents to list of dictionaries 
+# Then, convert contents to list of dictionaries
 trips = json.load(trips_file)
 ```
 
@@ -60,9 +60,9 @@ Ok, now that we have explored some of our data, let's begin to think through wha
 
 Remember that our task is to **use the trip location to predict the length of a trip**.  So let's select the `pickup_latitude`, `pickup_longitude`, and `trip_distance` from each trip.  That will give us the trip location and related `trip_distance` for each trip.  Then based on these **actual** trip distances we can use nearest neighbors to predict an **expected** trip distance for a trip, provided an **actual** location.
 
-** Add in about trip distance ** 
+** Add in about trip distance **
 
-Write a function called `parse_trips(trips)` that returns a list of the trips with only the following attributes: 
+Write a function called `parse_trips(trips)` that returns a list of the trips with only the following attributes:
 * `trip_distance`
 * `pickup_latitude`
 * `pickup_longitude`
@@ -128,7 +128,7 @@ marker = folium.CircleMarker(location = [40.7589, -73.9851], radius=10)
 marker.add_to(manhattan_map)
 ```
 
-Above, we first create a marker.  Then we add that circle marker to the `manhattan_map` we created earlier. 
+Above, we first create a marker.  Then we add that circle marker to the `manhattan_map` we created earlier.
 
 
 ```python
@@ -137,7 +137,7 @@ manhattan_map
 
 Do you see that blue dot near Time's Square?  That is our marker.  
 
-So now thar we can plot one marker on a map, we should have a sense of how we can plot many markers on a map to display our taxi ride data.  We simply plot a map, and then we add a marker for each location of a taxi trip.
+So now that we can plot one marker on a map, we should have a sense of how we can plot many markers on a map to display our taxi ride data.  We simply plot a map, and then we add a marker for each location of a taxi trip.
 
 Now let's write some functions to allow us to plot maps and add markers a little more easily.  
 
@@ -216,12 +216,12 @@ list(map(lambda marker: marker.location, trip_markers[0:4]))
 #  [40.795678, -73.971049]]
 ```
 
-Ok, now that we have a function that creates locations, and a function that creates markers, it is time to write a function to plot a map. 
+Ok, now that we have a function that creates locations, and a function that creates markers, it is time to write a function to plot a map.
 
 Write a function called `map_from` that, provided the first argument of a list location and second argument an integer representing the `zoom_start`, returns a `folium` map the corresponding location and `zoom_start` attributes.
 
 > Hint: The following is how to write a map with folium:
-> ```python 
+> ```python
     folium.Map(location=location, zoom_start=zoom_amount)
 > ```
 
@@ -269,7 +269,7 @@ map_with_markers
 
 ### Using Nearest Neighbors
 
-Ok, let's write a function that given a latitude and longitude will predict the distance for us.  We'll do this by first finding the nearest trips given a latitude and longitude. 
+Ok, let's write a function that given a latitude and longitude will predict the distance for us.  We'll do this by first finding the nearest trips given a latitude and longitude.
 
 Here we once again apply the nearest neighbors formula. As a first step, write a function named `distance_location` that calculates the distance in pickup location between two trips.
 
@@ -310,9 +310,9 @@ distance_between_neighbors(first_trip, second_trip)
 
 Ok, now our `neighbor_trip` has another attribute called `distance_from_selected`, that indicates the distance from the `neighbor_trip`'s pickup location from the `selected_trip`.
 
-> ** Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference. 
+> ** Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference.
 > * **`distance_from_selected`:** This is our calculation of the distance of the neighbor's pickup location from the selected trip.
-> * **`trip_distance`:** This is the attribute we were provided initially.  It tells us the length of the neighbor's taxi trip from pickup to dropoff.  
+> * **`trip_distance`:** This is the attribute we were provided initially.  It tells us the length of the neighbor's taxi trip from pickup to drop-off.  
 
 Next, write a function called `distance_all` that provided a list of neighbors, returns each of those neighbors with their respective `distance_from_selected` numbers.
 
@@ -396,7 +396,7 @@ seven_closest
 
 Looking at the `distance_from_selected` it appears that our our trips are still fairly close to our selected trip.  Notice that most of the data is within a distance of .002 away, so going to the top 7 nearest neighbors didn't seem to give us neighbors too far from each other, which is a good sign.
 
-Still, it's hard to know what distance in latitude and longitude really look like, so let's map the data. 
+Still, it's hard to know what distance in latitude and longitude really look like, so let's map the data.
 
 
 ```python
