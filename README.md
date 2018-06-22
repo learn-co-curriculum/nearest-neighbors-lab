@@ -12,7 +12,7 @@ In this lab, you apply nearest neighbors technique to help a taxi company predic
 LiftOff asks us to do some analysis to write a function that will allow it to **predict the length of a taxi ride for any given location **.
 
 Our technique will be the following:
-  * **Collect** Obtain the data containing all of the taxi information, and only select the attributes of taxi trips that we need
+  * **Collect** Obtain the data containing all of the taxi information, and only select the attributes of taxi trips that we need 
   * ** Explore ** Examine the attributes of our data, and plot some of our data on a map
   * ** Train ** Write our nearest neighbors formula, and change the number of nearby trips to predict the length of a new trip
   * ** Predict ** Use our function to predict trip lengths of new locations
@@ -25,14 +25,14 @@ Luckily for us, [NYC Open Data](https://opendata.cityofnewyork.us/) collects inf
 
 ![](./nyc-taxi.png)
 
-For you're reading pleasure, the data has already been downloaded into the [trips.json](https://github.com/learn-co-curriculum/nearest-neighbors-lab/blob/master/trips.json) file in this lab which you can find here.  We'll use Python's `json` library to take the data from the `trips.json` file and store it as a variable in our notebook.
+For your reading pleasure, the data has already been downloaded into the [trips.json](https://github.com/learn-co-curriculum/nearest-neighbors-lab/blob/master/trips.json) file in this lab which you can find here.  We'll use Python's `json` library to take the data from the `trips.json` file and store it as a variable in our notebook.
 
 
 ```python
 import json
 # First, read the file
 trips_file = open('trips.json')
-# Then, convert contents to list of dictionaries
+# Then, convert contents to list of dictionaries 
 trips = json.load(trips_file)
 ```
 
@@ -60,9 +60,9 @@ Ok, now that we have explored some of our data, let's begin to think through wha
 
 Remember that our task is to **use the trip location to predict the length of a trip**.  So let's select the `pickup_latitude`, `pickup_longitude`, and `trip_distance` from each trip.  That will give us the trip location and related `trip_distance` for each trip.  Then based on these **actual** trip distances we can use nearest neighbors to predict an **expected** trip distance for a trip, provided an **actual** location.
 
-** Add in about trip distance **
+** Add in about trip distance ** 
 
-Write a function called `parse_trips(trips)` that returns a list of the trips with only the following attributes:
+Write a function called `parse_trips(trips)` that returns a list of the trips with only the following attributes: 
 * `trip_distance`
 * `pickup_latitude`
 * `pickup_longitude`
@@ -128,7 +128,7 @@ marker = folium.CircleMarker(location = [40.7589, -73.9851], radius=10)
 marker.add_to(manhattan_map)
 ```
 
-Above, we first create a marker.  Then we add that circle marker to the `manhattan_map` we created earlier.
+Above, we first create a marker.  Then we add that circle marker to the `manhattan_map` we created earlier. 
 
 
 ```python
@@ -216,12 +216,12 @@ list(map(lambda marker: marker.location, trip_markers[0:4]))
 #  [40.795678, -73.971049]]
 ```
 
-Ok, now that we have a function that creates locations, and a function that creates markers, it is time to write a function to plot a map.
+Ok, now that we have a function that creates locations, and a function that creates markers, it is time to write a function to plot a map. 
 
 Write a function called `map_from` that, provided the first argument of a list location and second argument an integer representing the `zoom_start`, returns a `folium` map the corresponding location and `zoom_start` attributes.
 
 > Hint: The following is how to write a map with folium:
-> ```python
+> ```python 
     folium.Map(location=location, zoom_start=zoom_amount)
 > ```
 
@@ -244,7 +244,7 @@ times_square_marker and times_square_marker.add_to(times_square_map)
 times_square_map
 ```
 
-Now that we have a marker and a map, now let's write a function that adds a lot of markers to a map.
+Now that we have a marker and a map, now let's write a function that adds a lot of markers to a map.  This function should add each marker in the list to the map object then return the updated map object.
 
 
 ```python
@@ -269,7 +269,7 @@ map_with_markers
 
 ### Using Nearest Neighbors
 
-Ok, let's write a function that given a latitude and longitude will predict the distance for us.  We'll do this by first finding the nearest trips given a latitude and longitude.
+Ok, let's write a function that given a latitude and longitude will predict the distance for us.  We'll do this by first finding the nearest trips given a latitude and longitude. 
 
 Here we once again apply the nearest neighbors formula. As a first step, write a function named `distance_location` that calculates the distance in pickup location between two trips.
 
@@ -310,7 +310,7 @@ distance_between_neighbors(first_trip, second_trip)
 
 Ok, now our `neighbor_trip` has another attribute called `distance_from_selected`, that indicates the distance from the `neighbor_trip`'s pickup location from the `selected_trip`.
 
-> ** Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference.
+> ** Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference. 
 > * **`distance_from_selected`:** This is our calculation of the distance of the neighbor's pickup location from the selected trip.
 > * **`trip_distance`:** This is the attribute we were provided initially.  It tells us the length of the neighbor's taxi trip from pickup to drop-off.  
 
@@ -343,15 +343,15 @@ new_trip = {'pickup_latitude': 40.64499,
 
 nearest_three_neighbors = nearest_neighbors(new_trip, cleaned_trips or [], number = 3)
 nearest_three_neighbors
-# [{'distance_from_individual': 0.0004569288784918792,
+# [{'distance_from_selected': 0.0004569288784918792,
 #   'pickup_latitude': 40.64483,
 #   'pickup_longitude': -73.781578,
 #   'trip_distance': 7.78},
-#  {'distance_from_individual': 0.0011292165425673159,
+#  {'distance_from_selected': 0.0011292165425673159,
 #   'pickup_latitude': 40.644657,
 #   'pickup_longitude': -73.782229,
 #   'trip_distance': 12.7},
-#  {'distance_from_individual': 0.0042359798158141185,
+#  {'distance_from_selected': 0.0042359798158141185,
 #   'pickup_latitude': 40.648509,
 #   'pickup_longitude': -73.783508,
 #   'trip_distance': 17.3}]
@@ -359,17 +359,17 @@ nearest_three_neighbors
 
 Ok great! Now that we can provide a new trip location, and find the distances of the three nearest trips, we can take  calculate an estimate of the trip distance for that new trip location.  
 
-We do so simply by calculating the median of it's nearest neighbors.
+We do so simply by calculating the average of it's nearest neighbors.
 
 
 ```python
 import statistics
-def median_distance(neighbors):
+def mean_distance(neighbors):
     nearest_distances = list(map(lambda neighbor: neighbor['trip_distance'], neighbors))
-    return round(statistics.median(nearest_distances), 3)
+    return round(statistics.mean(nearest_distances), 3)
 
 nearest_three_neighbors = nearest_neighbors(new_trip, cleaned_trips or [], number = 3)
-distance_estimate_of_selected_trip = median_distance(nearest_three_neighbors) # 12.7
+distance_estimate_of_selected_trip = mean_distance(nearest_three_neighbors) # 12.593
 distance_estimate_of_selected_trip
 ```
 
@@ -392,11 +392,39 @@ midtown_trip = dict(pickup_latitude=40.761710, pickup_longitude=-73.982760)
 ```python
 seven_closest = nearest_neighbors(midtown_trip, cleaned_trips, number = 7)
 seven_closest
+# [{'trip_distance': 0.58,
+#   'pickup_latitude': 40.761372,
+#   'pickup_longitude': -73.982602,
+#   'distance_from_selected': 0.00037310588309379025},
+#  {'trip_distance': 0.8,
+#   'pickup_latitude': 40.762444,
+#   'pickup_longitude': -73.98244,
+#   'distance_from_selected': 0.00080072217404248},
+#  {'trip_distance': 1.4,
+#   'pickup_latitude': 40.762767,
+#   'pickup_longitude': -73.982293,
+#   'distance_from_selected': 0.0011555682584735844},
+#  {'trip_distance': 8.3,
+#   'pickup_latitude': 40.762868,
+#   'pickup_longitude': -73.983233,
+#   'distance_from_selected': 0.0012508768924205918},
+#  {'trip_distance': 1.26,
+#   'pickup_latitude': 40.760057,
+#   'pickup_longitude': -73.983502,
+#   'distance_from_selected': 0.0018118976240381972},
+#  {'trip_distance': 0.0,
+#   'pickup_latitude': 40.760644,
+#   'pickup_longitude': -73.984531,
+#   'distance_from_selected': 0.002067074502774709},
+#  {'trip_distance': 1.72,
+#   'pickup_latitude': 40.762107,
+#   'pickup_longitude': -73.98479,
+#   'distance_from_selected': 0.0020684557041472677}]
 ```
 
 Looking at the `distance_from_selected` it appears that our our trips are still fairly close to our selected trip.  Notice that most of the data is within a distance of .002 away, so going to the top 7 nearest neighbors didn't seem to give us neighbors too far from each other, which is a good sign.
 
-Still, it's hard to know what distance in latitude and longitude really look like, so let's map the data.
+Still, it's hard to know what distance in latitude and longitude really look like, so let's map the data. 
 
 
 ```python
@@ -411,7 +439,7 @@ Ok.  These locations stay fairly close to our estimated location of 51st street 
 
 
 ```python
-median_distance(seven_closest) # 1.26
+mean_distance(seven_closest) # 2.009
 ```
 
 Ok, now let's try a different location
@@ -423,11 +451,11 @@ charging_bull_closest = nearest_neighbors({'pickup_latitude': 40.7049, 'pickup_l
 
 
 ```python
-median_distance(charging_bull_closest) # 3.515
+mean_distance(charging_bull_closest) # 3.145
 ```
 
 Ok, so there appears to be a significant difference between choosing a location near Times Square versus choosing a location at Wall Street.
 
 ### Summary
 
-In this lab, we used the nearest neighbors function to predict the length of a taxi ride.  To do so, we selected a location, then found a number of taxi rides closest to that location, and finally took the median trip lengths of the nearest taxi rides to find an estimate of the new ride's trip length.  You can see that even with just a little bit of math and programming we can begin to make meaningful predictions with data.
+In this lab, we used the nearest neighbors function to predict the length of a taxi ride.  To do so, we selected a location, then found a number of taxi rides closest to that location, and finally took the average trip lengths of the nearest taxi rides to find an estimate of the new ride's trip length.  You can see that even with just a little bit of math and programming we can begin to make meaningful predictions with data.
