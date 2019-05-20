@@ -150,7 +150,7 @@ marker = folium.CircleMarker(location = [40.7589, -73.9851])
 manhattan_map = folium.Map(location=[40.7589, -73.9851])
 ```
 
-So let's write a function called to create this two element list from a trip.  Write a function called `location` that  takes in a trip as an argument and returns a list where the first element is the latitude and the second is the longitude.  Remember that a location looks like the following:
+So let's write a function to create this two element list from a trip.  Write a function called `location` that  takes in a trip as an argument and returns a list where the first element is the latitude and the second is the longitude.  Remember that a location looks like the following:
 
 
 ```python
