@@ -369,7 +369,7 @@ def mean_distance(neighbors):
     return round(statistics.mean(nearest_distances), 3)
 
 nearest_three_neighbors = nearest_neighbors(new_trip, cleaned_trips or [], number = 3)
-distance_estimate_of_selected_trip = mean_distance(nearest_three_neighbors) # 12.593
+distance_estimate_of_selected_trip = mean_distance(nearest_three_neighbors) # 12.7
 distance_estimate_of_selected_trip
 ```
 
@@ -439,7 +439,7 @@ Ok.  These locations stay fairly close to our estimated location of 51st street 
 
 
 ```python
-mean_distance(seven_closest) # 2.009
+mean_distance(seven_closest) # 1.26
 ```
 
 Ok, now let's try a different location
@@ -451,7 +451,7 @@ charging_bull_closest = nearest_neighbors({'pickup_latitude': 40.7049, 'pickup_l
 
 
 ```python
-mean_distance(charging_bull_closest) # 3.145
+mean_distance(charging_bull_closest) # 3.515
 ```
 
 Ok, so there appears to be a significant difference between choosing a location near Times Square versus choosing a location at Wall Street.
