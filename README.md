@@ -5,17 +5,17 @@
 
 In this lab, you apply nearest neighbors technique to help a taxi company predict the length of their rides.  Imagine that we are hired to consult for LiftOff, a limo and taxi service that is just opening up in NYC.  Liftoff wants it's taxi drivers to target longer rides, as the longer the ride the more money it makes.  LiftOff has the following theory:
 
-* the pickup location of a taxi ride can help predict the length of the ride.  
+* The pickup location of a taxi ride can help predict the length of the ride.  
 
 
 
-LiftOff asks us to do some analysis to write a function that will allow it to **predict the length of a taxi ride for any given location **.
+LiftOff asks us to do some analysis to write a function that will allow it to **predict the length of a taxi ride for any given location**.
 
 Our technique will be the following:
   * **Collect** Obtain the data containing all of the taxi information, and only select the attributes of taxi trips that we need 
-  * ** Explore ** Examine the attributes of our data, and plot some of our data on a map
-  * ** Train ** Write our nearest neighbors formula, and change the number of nearby trips to predict the length of a new trip
-  * ** Predict ** Use our function to predict trip lengths of new locations
+  * **Explore** Examine the attributes of our data, and plot some of our data on a map
+  * **Train** Write our nearest neighbors formula, and change the number of nearby trips to predict the length of a new trip
+  * **Predict** Use our function to predict trip lengths of new locations
 
 ### Collect and Explore the data
 
@@ -60,7 +60,7 @@ Ok, now that we have explored some of our data, let's begin to think through wha
 
 Remember that our task is to **use the trip location to predict the length of a trip**.  So let's select the `pickup_latitude`, `pickup_longitude`, and `trip_distance` from each trip.  That will give us the trip location and related `trip_distance` for each trip.  Then based on these **actual** trip distances we can use nearest neighbors to predict an **expected** trip distance for a trip, provided an **actual** location.
 
-** Add in about trip distance ** 
+**Add in about trip distance** 
 
 Write a function called `parse_trips(trips)` that returns a list of the trips with only the following attributes: 
 * `trip_distance`
@@ -310,7 +310,7 @@ distance_between_neighbors(first_trip, second_trip)
 
 Ok, now our `neighbor_trip` has another attribute called `distance_from_selected`, that indicates the distance from the `neighbor_trip`'s pickup location from the `selected_trip`.
 
-> ** Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference. 
+> **Understand the data:** Our dictionary now has a few attributes, two of which say distance.  Let's make sure we understand the difference. 
 > * **`distance_from_selected`:** This is our calculation of the distance of the neighbor's pickup location from the selected trip.
 > * **`trip_distance`:** This is the attribute we were provided initially.  It tells us the length of the neighbor's taxi trip from pickup to drop-off.  
 
