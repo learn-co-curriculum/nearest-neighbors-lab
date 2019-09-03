@@ -78,9 +78,9 @@ def parse_trips(trips):
 parsed_trips = parse_trips(trips)
 parsed_trips and parsed_trips[0]
 
-# {'pickup_latitude': '40.64499',
-#  'pickup_longitude': '-73.78115',
-#  'trip_distance': '18.38'}
+# {'trip_distance': '18.379999999999999',
+# 'pickup_latitude': '40.64499',
+# 'pickup_longitude': '-73.781149999999997'}
 ```
 
 Now, there's just one change to make.  If you look at one of the trips, all of the values are strings.  Let's change them to be floats.
@@ -100,14 +100,14 @@ cleaned_trips = float_values(parsed_trips)
 ```python
 cleaned_trips[0]
 
-# {'pickup_latitude': 40.64499,
-#  'pickup_longitude': -73.78115,
-#  'trip_distance': 18.38}
+# {'trip_distance': 18.38,
+# 'pickup_latitude': 40.64499,
+# 'pickup_longitude': -73.78115}
 ```
 
 ### Exploring the Data
 
-Now that we have paired down our data, let's get a sense of our trip data.  We can use the `folium` Python library to plot a map of Manhattan, and our data.  First we must import `folium`, and then use the `Map` function to pass through a `location`, and `zoom_start`.  If a map isn't showing up below, copy and paste the command `pip install -r requirements.txt` into your terminal to install `folium` then try again.
+Now that we have paired down our data, let's get a sense of our trip data.  We can use the `folium` Python library to plot a map of Manhattan, and our data.  First we must import `folium`, and then use the `Map` function to pass through a `location`, and `zoom_start`.  If a map isn't showing up below, copy and paste the command `pip install folium` into your terminal to install `folium` then try again.
 
 
 ```python
@@ -184,6 +184,10 @@ import json
 times_square_marker = to_marker([40.7589, -73.9851])
 
 times_square_marker and times_square_marker.location # [40.7589, -73.9851]
+```
+
+
+```python
 times_square_marker and json.loads(times_square_marker.options)['radius'] # 6
 ```
 
@@ -208,7 +212,10 @@ cleaned_trips[0:4]
 
 ```python
 trip_markers and len(trip_markers) # 1000
+```
 
+
+```python
 list(map(lambda marker: marker.location, trip_markers[0:4]))
 # [[40.64499, -73.78115],
 #  [40.766931, -73.982098],
@@ -235,7 +242,6 @@ def map_from(location, zoom_amount):
 ```python
 times_square_map = map_from([40.7589, -73.9851], 15)
 times_square_map and times_square_map.location # [40.7589, -73.9851]
-times_square_map and times_square_map.zoom_start # 15
 ```
 
 
@@ -290,7 +296,7 @@ distance_first_and_second = distance_location(first_trip, second_trip)
 distance_first_and_second and round(distance_first_and_second, 3) # 0.235
 ```
 
-Ok, next write a function called `distance_between_neighbors` that adds a new key-value pair, called `distance_from_selected`, that calculates the distance of the `neighbor_trip` from the `selected_trip`.
+Ok, next write a function called `distance_between_neighbors` that adds a new key-value pair, called `distance_from_selected`, that indicates the distance of the `neighbor_trip` from the `selected_trip`.
 
 
 ```python
@@ -302,10 +308,10 @@ def distance_between_neighbors(selected_trip, neighbor_trip):
 ```python
 distance_between_neighbors(first_trip, second_trip)
 
-# {'distance_from_selected': 0.23505256047318146,
-#  'pickup_latitude': 40.766931,
-#  'pickup_longitude': -73.982098,
-#  'trip_distance': 1.3}
+# {'pickup_latitude': 40.766931,
+# 'pickup_longitude': -73.982098,
+# 'trip_distance': 1.3,
+# 'distance_from_selected': 0.23505256047318146}
 ```
 
 Ok, now our `neighbor_trip` has another attribute called `distance_from_selected`, that indicates the distance from the `neighbor_trip`'s pickup location from the `selected_trip`.
@@ -343,18 +349,18 @@ new_trip = {'pickup_latitude': 40.64499,
 
 nearest_three_neighbors = nearest_neighbors(new_trip, cleaned_trips or [], number = 3)
 nearest_three_neighbors
-# [{'distance_from_selected': 0.0004569288784918792,
-#   'pickup_latitude': 40.64483,
-#   'pickup_longitude': -73.781578,
-#   'trip_distance': 7.78},
-#  {'distance_from_selected': 0.0011292165425673159,
-#   'pickup_latitude': 40.644657,
-#   'pickup_longitude': -73.782229,
-#   'trip_distance': 12.7},
-#  {'distance_from_selected': 0.0042359798158141185,
-#   'pickup_latitude': 40.648509,
-#   'pickup_longitude': -73.783508,
-#   'trip_distance': 17.3}]
+# [{'trip_distance': 7.78,
+#  'pickup_latitude': 40.64483,
+#  'pickup_longitude': -73.781578,
+#  'distance_from_selected': 0.0004569288784918792},
+# {'trip_distance': 12.7,
+#  'pickup_latitude': 40.644657,
+#  'pickup_longitude': -73.782229,
+#  'distance_from_selected': 0.0011292165425673159},
+# {'trip_distance': 17.3,
+#  'pickup_latitude': 40.648509,
+#  'pickup_longitude': -73.783508,
+#  'distance_from_selected': 0.0042359798158141185}]
 ```
 
 Ok great! Now that we can provide a new trip location, and find the distances of the three nearest trips, we can take  calculate an estimate of the trip distance for that new trip location.  
