@@ -1,4 +1,6 @@
 
+# This lesson is no longer in use in the curriculum.  It is now archived
+
 # Nearest Neighbors Lab
 
 ### Introduction
